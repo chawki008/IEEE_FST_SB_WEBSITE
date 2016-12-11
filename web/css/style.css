@@ -1,0 +1,27 @@
+.center {
+    
+    text-align: center;
+    vertical-align: middle;	
+    font-size: 60px;
+
+
+}
+body {
+	background-image: url('back.jpg');
+	background-size: 100% 150%;
+
+}
+
+.but{
+		font-size: 20px;
+		font-family: "Courier New";
+
+}
+#wlc{
+	color: #FFFFFF;
+	font-size: 140px;
+	font-family: "Courier New";
+}
+.notv{
+	opacity: 0;
+}

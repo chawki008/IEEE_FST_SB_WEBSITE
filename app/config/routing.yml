@@ -1,0 +1,27 @@
+ieee_editor_article:
+    resource: "@IEEEEditorBundle/Controller/articleController.php"
+    type:     annotation
+
+ieee_editor:
+    resource: "@IEEEEditorBundle/Controller/DefaultController.php"
+    type: annotation
+
+ieee_user_suggest:
+    resource: "@IEEEUserBundle/Controller/suggestController.php"
+    type:     annotation
+
+ieee_user_task:
+    resource: "@IEEEUserBundle/Controller/taskController.php"
+    type:     annotation
+
+ieee_user_user:
+    resource: "@IEEEUserBundle/Controller/UserController.php"
+    type:     annotation
+
+ieee_user:
+    resource: "@IEEEUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

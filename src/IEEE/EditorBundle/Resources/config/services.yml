@@ -1,0 +1,4 @@
+services:
+#    ieee_editor.example:
+#        class: IEEE\EditorBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

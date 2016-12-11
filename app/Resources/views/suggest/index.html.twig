@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Suggests list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Content</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for suggest in suggests %}
+            <tr>
+                <td><a href="{{ path('suggest_show', { 'id': suggest.id }) }}">{{ suggest.id }}</a></td>
+                <td>{{ suggest.content }}</td>
+                <td>{% if suggest.date %}{{ suggest.date|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('suggest_show', { 'id': suggest.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('suggest_edit', { 'id': suggest.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('suggest_new') }}">Create a new suggest</a>
+        </li>
+    </ul>
+{% endblock %}

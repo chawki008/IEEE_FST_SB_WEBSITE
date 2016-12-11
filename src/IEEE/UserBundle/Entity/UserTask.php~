@@ -1,0 +1,75 @@
+<?php
+
+namespace IEEE\UserBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * UserTask
+ *
+ * @ORM\Table(name="user_task")
+ * @ORM\Entity(repositoryClass="IEEE\UserBundle\Repository\UserTaskRepository")
+ */
+class UserTask
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="post", type="string", length=255)
+     */
+    private $post;
+
+    /**
+     *@ORM\ManyToOne(targetEntity="IEEE\UserBundle\Entity\task" , inversedBy="TaskUsers")
+     */
+    private $task;
+
+    /**
+     *@ORM\ManyToOne(targetEntity="IEEE\UserBundle\Entity\User" , inversedBy="UserTasks")
+     */
+    private $user;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set post
+     *
+     * @param string $post
+     *
+     * @return UserTask
+     */
+    public function setPost($post)
+    {
+        $this->post = $post;
+
+        return $this;
+    }
+
+    /**
+     * Get post
+     *
+     * @return string
+     */
+    public function getPost()
+    {
+        return $this->post;
+    }
+}
+

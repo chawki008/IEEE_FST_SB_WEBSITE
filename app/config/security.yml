@@ -1,0 +1,38 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
+# app/config/security.yml
+
+security:
+
+
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_EDITOR,ROLE_USER]
+        
+    encoders:
+        IEEE\UserBundle\Entity\User: sha512
+    providers:
+        your_db_provider:
+            entity:
+                class: IEEEUserBundle:User
+                property: username
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        fire:
+            pattern: ^/auth|^/editor
+            anonymous: true 
+            security: false
+
+        main:
+            
+            guard:
+                authenticators:
+                    - 'jwt_token_authenticator'
+            # activate different ways to authenticate
+
+    access_control:
+        - { path: ^/editor, roles: ROLE_EDITOR }

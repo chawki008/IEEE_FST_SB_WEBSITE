@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Task</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ task.id }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ task.content }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{% if task.date %}{{ task.date|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Deadline</th>
+                <td>{% if task.deadline %}{{ task.deadline|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Done</th>
+                <td>{% if task.done %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('task_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('task_edit', { 'id': task.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
