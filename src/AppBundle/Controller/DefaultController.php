@@ -32,22 +32,22 @@ class DefaultController extends Controller
     public function authAction(Request $request) 
     {
         $username = trim($request->get('username'));
-    $password = trim($request->get('password'));
-    $em = $this->get('doctrine')->getEntityManager();   
-    $query = $em->createQuery("SELECT u FROM \IEEE\UserBundle\Entity\User u WHERE u.username = :username");
-    $query->setParameter('username', $username);
-    $user = $query->getOneOrNullResult();
-    if(!$user) return new Response("invalid credentials",404);
-    $isValid = $this->get('security.password_encoder')
-            ->isPasswordValid($user, $password);
-    if (!$isValid) {
-     return new Response("invalid credentials",404);
-        }        
-    $token = $this->get('lexik_jwt_authentication.encoder')
-            ->encode([
-                'username' => $user->getUsername(),
-                'exp' => time() + 4800 // 1 hour expiration
-            ]);    
+        $password = trim($request->get('password'));
+        $em = $this->get('doctrine')->getEntityManager();   
+        $query = $em->createQuery("SELECT u FROM \IEEE\UserBundle\Entity\User u WHERE u.username = :username");
+        $query->setParameter('username', $username);
+        $user = $query->getOneOrNullResult();
+        if(!$user) return new Response("invalid credentials",404);
+        $isValid = $this->get('security.password_encoder')
+                ->isPasswordValid($user, $password);
+        if (!$isValid) {
+         return new Response("invalid credentials",404);
+            }        
+        $token = $this->get('lexik_jwt_authentication.encoder')
+                ->encode([
+                    'username' => $user->getUsername(),
+                    'exp' => time() + 4800 // 1 hour expiration
+                ]);    
 
             
           
