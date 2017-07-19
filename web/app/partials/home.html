@@ -1,0 +1,111 @@
+<div>
+
+  <hr>
+    <div class="container">
+      <h2 class="inline">Membres Suggetions</h2>
+      <button class="btn btn-primary fixedbutton" type="button" data-toggle="modal" data-target="#Sugg">
+        <span class="glyphicon glyphicon-plus"></span>
+      </button>
+      <!--ADD suugestion modal  -->
+      <!-- Modal -->
+      <div class="modal fade" id="Sugg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Add Suggestion</h4>
+            </div>
+            <div class="modal-body">
+              <h3>What do you suggest ?</h3>
+              <div class="form-group">
+                  <textarea class="form-control" name="sugg" rows="3" placeholder="Suggest content" ng-model="sugg" required></textarea>
+              </div>              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addSuggest(sugg)">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="input-form pull-right has-feedback">
+        <input ng-model="q" id="search" class="form-control input-lg" placeholder="Search suggestion">
+        <span class="ion-search form-control-feedback"></span>
+      </div>
+    </div>
+  <hr>
+
+  <div class="container" ng-hide="loading">
+
+      <!-- Suggestions iterration-->      
+      <div dir-paginate="suggestion in suggestions | filter:q | itemsPerPage: pageSize" current-page="currentPage" > 
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-2 text-center">
+                <img class="img-circle" height="80" width="80" alt="Avatar" ng-src="{{suggestion.user.img}}">
+              </div>
+              <div class="col-sm-10">
+                <button type="button" class="btn btn-default pull-right"  ng-click="getComments(suggestion.suggId) ; changeView(suggestion.suggId);">
+                  <span class="glyphicon glyphicon-eye-{{view[suggestion.suggId]}} " ></span>&nbsp;&nbsp;View Content 
+                </button>
+                <h3 >{{suggestion.title}} </h3>
+                <h5>
+                  <span class="glyphicon glyphicon-time">
+                  </span> Post by {{suggestion.user.username}}, {{prettyDate(suggestion.date)}}.
+                </h5>
+                
+              </div>
+            </div>
+
+            
+            <div class="row" ng-hide="view[suggestion.suggId]=='open'" >
+              <hr>
+              <div  class="container" ng-repeat="Comment in suggestion.comments" >
+                <div class="col-sm-1 "></div>
+                <div class="col-sm-2 text-center">
+                  <img class="img-circle" height="80" width="80" alt="Avatar" ng-src="{{Comment.user.img}}">
+                </div>
+                <div class="col-sm-8">
+                  <h4>{{Comment.user.username}}
+                    <small>
+                      &nbsp;<span class="glyphicon glyphicon-time" ></span>&nbsp;{{prettyDate(Comment.date)}}
+                    </small>
+                  </h4>
+                  <p class="text-justify">{{Comment.content}}</p>
+                 <br>
+                </div>
+                <div class="col-sm-1" ng-hide="!userComment(Comment.user.id)">
+                  <a href="" ng-click="deleteComment(Comment.id,suggestion.suggId)" title="delete">
+                    <span class="glyphicon glyphicon-trash " style="color:red"></span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+           <form role="form" method="post" ng-submit="addComment(suggestion.suggId,comment)" name="commentForm" ng-hide="view[suggestion.suggId]=='open'">
+              <div class="form-group">
+                <hr>
+                <textarea class="form-control" name="comment" rows="3" placeholder="Leave a Comment" ng-model="comment" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+            
+
+          
+
+
+
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+          <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/partials/dirPagination.tpl.html"></dir-pagination-controls>
+      </div>     
+  </div>
+  <!-- Loading spinner -->
+  <div class="col-md-12"  ng-hide="!loading">
+    <i class="fa fa-spinner fa-spin centerlize" style="font-size:100px;"></i>
+  </div>
+</div>
