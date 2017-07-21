@@ -1,0 +1,165 @@
+<div>
+    <!-- Modal -->
+    <div id="taskModal" class="modal fade bs-example-modal-lg" role="dialog">
+      <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">New Task</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" ng-submit="newTask()" name="taskForm">
+                    <div class="form-group ">
+                        <input class="form-control" type="text" name="content" ng-model="task.content" placeholder="Content" required autofocus>
+                    </div>
+                    <div class="form-group ">
+                        <input class="form-control " type="date" placeholder="MM/DD/YYY" name="deadline" ng-model="task.deadline" >
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-1 align-middle " style=" margin:10px;">
+                                <h4> Team </h4>
+                            </div>
+                            <div class="col-md-1 " ng-repeat="user in formUsers" style=" margin:10px;">
+                                <div class="inner" >
+                                    <div class="img-wrap">
+                                        <span class="glyphicon glyphicon-remove closes" ng-click="deselectUser(user.id)"></span>
+                                        <img ng-src="{{user.img}}" alt="username" title="{{user.username}}" class="center-cropped" >
+                                    </div>                                         
+                                </div>
+                            </div>
+                        </div>
+                        <typeahead update-fn="searchUser(msg)" adduser-fn="selectUser(id)" ng-model='task.users' place-holder="Add user" i-Class="fa-lock" ng-disabled=""  refresh-fn="refresh()" >       
+                        </typeahead>
+                    </div>
+                    <button type="submit" ng-disabled="taskForm.$invalid" class="btn btn-lg  btn-block btn-success" data-dismiss="modal">
+                        Create task</i>
+                    </button>
+                </form>
+            </div>
+            
+        </div>
+
+      </div>
+    </div>
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <p class="lead"><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Tasks</p>
+                <div class="list-group">
+                    <a href="" ng-repeat="task in tasks" class="list-group-item {{getClass($index)}}" ng-click="changeTask($index)">
+                        {{ task.content}}
+                    </a>
+                </div>
+                <div class="list-group">
+                    <a href="" class="list-group-item " data-toggle="modal" data-target="#taskModal">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New Task
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-9" ng-hide="loading || empty">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-2 align-middle">
+                            <h4>Responsable</h4>
+                        </div>
+                        <div class="col-md-1 box">
+                             <a href="#" class="inner">    
+                                <img ng-src="{{selectedUsersList[0].img}}" alt="username" title="{{selectedUsersList[0].username}}" class=" center-cropped " >
+                            </a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-1 align-middle " style=" margin:10px;">
+                            <h4> Team </h4>
+                        </div>
+                        <div class="col-md-1 " ng-repeat="user in selectedUsersList" style=" margin:10px;">
+                            <div class="inner" >
+                                <div class="img-wrap">
+                                    <span class="glyphicon glyphicon-remove closes" ng-click="deleteUser(user.id)"></span>
+                                    <img ng-src="{{user.img}}" alt="username" title="{{user.username}}" class="center-cropped" >
+                                </div>                                         
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-3 align-middle">
+                            <h5>Add Team member</h5>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="inner ">
+                                <typeahead update-fn="searchUser(msg)" adduser-fn="addUser(id)" ng-model='troll' place-holder="Add user" i-Class="fa-lock" ng-disabled=""  task-id="tasks[selectedTask].id" refresh-fn="refresh()">       
+                                </typeahead>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <div class="thumbnail">
+                    <div class="caption-full">
+                        <h4><a href="#">{{tasks[selectedTask].content}}</a>
+                        </h4>
+                    </div>
+                    <div class="ratings">
+                        <p class="pull-right">{{updates.length}}&nbsp;updates</p>
+                        <p>
+                            <span class="glyphicon glyphicon-time"></span>
+                            &nbsp;&nbsp;Deadline : {{prettyDate(tasks[selectedTask].deadline.date)}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="well">
+                    <div class="form-group drop-input">
+                        <span class="glyphicon glyphicon-comment form-control-feedback"></span>
+                        <input type="text" class="form-control" placeholder="Put your updates" ng-model="feedback" my-enter="addUpdate(feedback)" required />
+
+                        <!--<span class="input-group-addon">
+                            <a href="">
+                                <i class="glyphicon glyphicon-check" ng-click=""></i>
+                            </a>
+                        </span> -->
+                    </div>
+                    <div class="row" ng-repeat="update in updates">
+                        <hr>
+                        <div class="col-md-11">
+                            <span class="glyphicon glyphicon-user"></span>
+                            &nbsp;{{update.username}}
+                            <span class="pull-right">{{prettyDate(update.date)}}</span>
+                            <p>{{update.content}}</p>
+                        </div>
+                        <div class="col-md-1">
+                            <a href="" style="color:#d17581;" ng-hide="userId != update.userId">
+                                <span class="glyphicon glyphicon-trash" ng-click="deleteUpdate(update.id)"></span>
+                            </a>
+                        </div>
+                    </div>                
+                </div>
+            </div>
+            <div class="col-md-9 " ng-hide="!loading">
+                <i class="fa fa-spinner centerlize fa-spin" style="font-size:100px;"></i>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+
+    <div class="container" ng-hide="loading">
+        <hr>
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; IEEE FST SB Website 2017</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- /.container -->
+
+</div>

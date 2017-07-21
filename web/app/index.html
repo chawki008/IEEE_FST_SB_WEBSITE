@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html ng-app="MyApp">
+<link rel="icon" href="http://localhost:8000/app/favicon.png" type="image/png">
+<head ng-cloak>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>IEEE FST SB</title>
+  <script src="http://localhost:8000/app/vendor/angular.js"></script>
+  <!--Loader-->
+  <link rel="stylesheet" href="https://cdn.rawgit.com/codekraft-studio/angular-page-loader/master/dist/angular-page-loader.css">
+  <script type="text/javascript" src="https://cdn.rawgit.com/codekraft-studio/angular-page-loader/master/dist/angular-page-loader.min.js"></script>
+  <page-loader></page-loader>
+
+  
+  <link href="//fonts.googleapis.com/css?family=Roboto|Montserrat:400,700|Open+Sans:400,300,600" rel="stylesheet">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdn.jsdelivr.net/animatecss/3.2.0/animate.css" rel="stylesheet">
+  <link href="http://localhost:8000/app/stylesheets/angular-toastr.css" rel="stylesheet">
+  <link href="http://localhost:8000/app/stylesheets/styles.css" rel="stylesheet">
+  <link href="http://localhost:8000/app/stylesheets/shop-item.css" rel="stylesheet">
+  <!-- Third-party Libraries -->
+  
+  <script src="http://localhost:8000/app/vendor/angular-animate.js"></script>
+  <script src="http://localhost:8000/app/vendor/angular-messages.js"></script>
+  <script src="http://localhost:8000/app/vendor/angular-resource.js"></script>
+  <script src="http://localhost:8000/app/vendor/angular-sanitize.js"></script>
+  <script src="http://localhost:8000/app/vendor/angular-ui-router.js"></script>
+  <script src="http://localhost:8000/app/vendor/angular-toastr.tpls.js"></script>
+  <script src="http://localhost:8000/app/vendor/satellizer.js"></script>
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  
+
+  <!-- Application Code -->
+  <script src="http://localhost:8000/app/controllers/dirPag.js"></script>
+  <script src="http://localhost:8000/app/app.js"></script>
+
+  <script src="http://localhost:8000/app/directives/passwordStrength.js"></script>
+  <script src="http://localhost:8000/app/directives/search.js"></script>
+  <script src="http://localhost:8000/app/directives/passwordMatch.js"></script>
+  <script src="http://localhost:8000/app/controllers/home.js"></script>
+  <script src="http://localhost:8000/app/controllers/login.js"></script>
+  <script src="http://localhost:8000/app/controllers/signup.js"></script>
+  <script src="http://localhost:8000/app/controllers/logout.js"></script>
+  <script src="http://localhost:8000/app/controllers/profile.js"></script>
+  <script src="http://localhost:8000/app/controllers/navbar.js"></script>
+  <script src="http://localhost:8000/app/services/account.js"></script>
+  <script src="http://localhost:8000/app/services/sugg.js"></script>
+  <script src="http://localhost:8000/app/services/task.js"></script>
+  <script src="http://localhost:8000/app/controllers/tasks.js"></script>
+</head>
+<body>
+<nav ng-controller="NavbarCtrl" class="navbar navbar-inverse" >
+    <div class="navbar-header">
+      <a class="brand" href="#">
+        <img class="smalli alt="Brand" src="http://localhost:8000/app/ieee_logo.png">
+      </a>
+    </div>
+ 
+  
+  <ul class="nav navbar-nav">
+    <li ng-if="isAuthenticated()">
+      <a ui-sref="home"> 
+        <span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Home
+      </a>
+    </li>
+    <li ng-if="isAuthenticated()">
+      <a ui-sref="profile"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Profile</a>
+    </li>
+    <li ng-if="isAuthenticated()">
+      <a ui-sref="tasks"> 
+        <span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Tasks
+      </a>
+    </li>
+  </ul>
+  <ul ng-if="!isAuthenticated()" class="nav navbar-nav pull-right">
+    <li>
+      <button ui-sref="login" type="button" class="btn btn-success navbar-btn">
+      <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login in
+      </button>
+    </li>
+    <li><a ui-sref="signup">Sign up</a></li>
+  </ul>
+  <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
+    <li>
+
+      <a ui-sref="logout"> <span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout</a>
+    </li>
+  </ul>
+</nav>
+
+<div ui-view></div>
+
+
+</body>
+</html>

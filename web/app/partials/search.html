@@ -1,0 +1,18 @@
+
+
+	<div class="form-group drop-input">
+		
+		<input type="text" class="form-control" ng-model='ngModel'  ng-change="searchFn(ngModel)" placeholder="{{placeHolder}}" ng-disabled="ngDisabled" required />
+  	<div class="items">
+
+  		<div class="item" ng-repeat="item in  items"  ng-hide="!ngModel.length" ng-click="selectUser(item.id)">
+          <img ng-src="{{item.img}}" alt="username" title="{{item.username}}" class="center-cropped " >
+    			{{item.username}}
+  		</div>
+
+  		<div ng-show="loading">
+        <i class="fa fa-spinner fa-spin" ></i>&nbsp;&nbsp;Loading
+      </div>
+  	</div>
+    <span class="glyphicon glyphicon-plus form-control-feedback"></span>
+	</div>
